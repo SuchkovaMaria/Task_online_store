@@ -1,0 +1,21 @@
+{% extends 'home.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="row text-center">
+    {% for product in products %}
+    <div class="col-3">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
+            </div>
+            <div class="card-body">
+                <img src="{{product.image| media_filter}}" width="120px" height="130px">
+                <p class="card-text"></h5>{{ product.description|truncatechars:20 }}</h5></p>
+                <a class="p-2 btn btn-outline-primary" href="#">Добавить в корзину</a>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_info' product.pk %}">Подробнее о товаре</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

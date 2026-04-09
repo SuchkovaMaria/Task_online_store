@@ -1,0 +1,17 @@
+{% extends 'home.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="row text-center">
+    <div class="card mb-4 box-shadow">
+        <div class="card-body">
+            <h4 class="card-title">{{product.name}}</h4>
+            <p class="card-text">{{product.category}}</p>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Цена: {{product.price}} руб.</h6>
+            <img src="{{product.image| media_filter}}" width="120px" height="130px">
+            <p class="card-text">{{product.description}}</p>
+            <a class="p-2 btn btn-outline-primary" href="#">Добавить в корзину</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}" role="button">Вернуться в каталог</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
