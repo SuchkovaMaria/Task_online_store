@@ -1,22 +1,31 @@
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from catalog.models import Product
 
+class ProductListView(ListView):
+    """Контролер для главной страницы (список товаров)"""
+    model = Product
 
-def home(request):
-    """Контролер для главной страницы"""
-    products = Product.objects.all()
-    context = {"products": products}
-    return render(request, "product_list.html", context)
-
+class ProductDetailView(DetailView):
+    """Контролер карточки товара"""
+    model =  Product
 
 def contacts(request):
     """Контролер для страницы Контакты"""
     return render(request, "contacts.html")
 
-def product_info(request, pk):
-    """Контролер карточки товара"""
-    product = get_object_or_404(Product, pk=pk)
-    context = {"product": product}
-    return render(request, "product_info.html", context)
+class ProductCreateView(CreateView):
+    """Класс добавления товара"""
+    model = Product
+    # Какие поля будут в форме создания
+    fields = ["name","description", "image","category", "price"]
+    #Куда перенаправляется после того как будет выполнено
+    success_url = reverse_lazy("catalog:home")
+
+class ProductDeleteView(DeleteView):
+    """Класс удаления товара"""
+    model = Product
+    success_url = reverse_lazy("catalog:home")
 
