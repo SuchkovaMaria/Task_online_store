@@ -32,7 +32,7 @@ class Product(models.Model):
         blank=True,
         null=True,
         verbose_name="Категория",
-        help_text="Введите название товара",
+        help_text="Введите название категории",
         related_name="categories",
     )
     price = models.FloatField(verbose_name="Цена", help_text="Укажите цену товара")
