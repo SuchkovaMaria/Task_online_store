@@ -11,6 +11,8 @@
             <p class="card-text">{{object.description}}</p>
             <a class="p-2 btn btn-outline-primary" href="#">Добавить в корзину</a>
             <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}" role="button">Вернуться в каталог</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:catalog_delete' object.pk %}">Удалить товар</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:catalog_update' object.pk %}">Редактировать</a>
         </div>
     </div>
 </div>
