@@ -1,0 +1,15 @@
+{% extends 'catalog/home.html' %}
+{% block content %}
+<div class="row text-center">
+    <form method="post" enctype="multipart/form-data">
+        <div class="card mb-4 box-shadow">
+            <div class="card-body">
+                {% csrf_token %}
+                {{form.as_p}}
+            </div>
+            <a class="p-2 btn btn-outline-primary">Добавить в каталог</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}" role="button">Вернуться в каталог</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -17,6 +17,8 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="Товар", help_text="Введите название товара")
     description = models.TextField(verbose_name="Описание", blank=True, null=True, help_text="Введите описание товара")
+
+    #путь для сохранения фото товаров
     image = models.ImageField(
         upload_to="data/image_product",
         blank=True,
