@@ -18,11 +18,14 @@ class UsersCreateView(CreateView):
     form_class = UserRegisterForm
     success_url = reverse_lazy("users:login")
 
+
     def form_valid(self, form):
         user = form.save()
         user.is_active = False
         token = secrets.token_hex(14)
         user.token = token
+        password = form.cleaned_data.get('password1')
+        user.set_password(password)
         user.save()
         host = self.request.get_host()
         url = f"http://{host}/users/email-confirm/{token}"
