@@ -3,4 +3,15 @@
   <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}">Каталог</a>
   <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog' %}" role="button">Отзывы о товарах</a>
   <a class="p-2 btn btn-outline-primary" href="/contacts/">Контакты</a>
+  {% if user.is_authenticated %}
+      <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:catalog_create' %}" role="button">Добавить товар</a>
+      <form method="post" action="{% url 'users:logout' %}">
+          {% csrf_token %}
+          <button class="p-2 btn btn-outline-primary">Выйти</button>
+      </form>
+      </li>
+  {% else %}
+      <a class="p-2 btn btn-outline-primary" href="{% url 'users:login' %}" role="button">Войти</a>
+      <a class="p-2 btn btn-outline-primary" href="{% url 'users:registr' %}" role="button">Регистация</a>
+  {% endif %}
 </nav>
