@@ -1,13 +1,15 @@
 {% extends 'catalog/home.html' %}
 {% block content %}
-<div class="row text-center">
+<div class="row text">
     <form method="post" enctype="multipart/form-data">
         <div class="card mb-4 box-shadow">
-            <p class="card-text"></h5>Уверены, что хотите удалить {{ object.name }}?</h5></p>
             <div class="card-body">
                 {% csrf_token %}
+                {{form.as_p}}
             </div>
-            <a class="p-2 btn btn-outline-primary">Удалить</a>
+            <button type="submit" class="p-2 btn btn-outline-primary">
+              Зарегистрироваться
+            </button>
             <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}" role="button">Вернуться в каталог</a>
         </div>
     </form>
