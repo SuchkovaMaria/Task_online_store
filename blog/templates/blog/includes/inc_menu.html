@@ -2,11 +2,12 @@
 <nav class="ms-5">
   <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}">Каталог</a>
   {% if user.is_authenticated %}
-      <form method="post" action="{% url 'users:logout' %}">
-            {% csrf_token %}
-      <button class="p-2 btn btn-outline-primary">Выйти</button>
-      </form>
-  {% else %}
+    {% if perms.blog.add_productpost %}
     <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog_create' %}" role="button">Добавить отзыв</a>
+    {% endif %}
+    <form method="post" action="{% url 'users:logout' %}">
+            {% csrf_token %}
+        <button class="p-2 btn btn-outline-primary">Выйти</button>
+    </form>
   {% endif %}
 </nav>

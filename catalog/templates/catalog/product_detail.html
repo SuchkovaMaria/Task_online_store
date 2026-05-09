@@ -11,9 +11,19 @@
             <p class="card-text">{{object.description}}</p>
             {% if user.is_authenticated %}
                 <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}" role="button">Вернуться в каталог</a>
-                <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:catalog_delete' object.pk %}">Удалить товар</a>
+                {% if user == object.owner %}
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:catalog_delete' object.pk %}">Удалить товар</a>
+                {% endif %}
+                {% if user == object.owner %}
                 <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:catalog_update' object.pk %}">Редактировать</a>
-            {% else %}
+                {% endif %}
+                {% if perms.catalog.can_unpublish_product and object.status == False %}
+                <form action="{% url 'catalog:catalog_public' object.pk %}" method="post">
+                        {% csrf_token %}
+                    <button class="p-2 btn btn-outline-primary">Опубликовать</button>
+                </form>
+                {% endif %}
+            {% elif not perms.catalog.change_product %}
                 <a class="p-2 btn btn-outline-primary" href="#">Добавить в корзину</a>
             {% endif %}
         </div>

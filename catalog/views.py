@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseForbidden
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.views import View
 
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 
@@ -30,6 +33,10 @@ class ProductCreateView(CreateView):
     # Куда перенаправляется после того как будет выполнено
     success_url = reverse_lazy("catalog:home")
 
+    def form_valid(self, form):
+        form.instance.owner = self.request.user  # Автозаполнение
+        return super().form_valid(form)
+
 
 class ProductUpdateView(UpdateView):
     """Класс редактирования товара"""
@@ -55,3 +62,18 @@ class ContactsTemplateView(TemplateView):
     """Контролер для страницы Контакты"""
 
     template_name = "catalog/contacts.html"
+
+
+class PublicProductView(LoginRequiredMixin, View):
+    """Контроллер для публикации товара"""
+
+    def post(self, request, pk):
+        product = get_object_or_404(Product, id=pk)
+
+        if not request.user.has_perm('catalog.can_unpublish_product'):
+            return HttpResponseForbidden("У вас нет прав для публикации товара.")
+
+        product.status = True
+        product.save()
+
+        return redirect("catalog:home")
