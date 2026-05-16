@@ -5,7 +5,9 @@ from catalog.models import Product
 
 class ProductPost(models.Model):
     name = models.CharField(max_length=100, verbose_name="Краткий отзыв", help_text="Введите краткий отзыв")
-    description = models.TextField(verbose_name="Отзыв", blank=True, null=True, help_text="Введите опишите что вам понравилось")
+    description = models.TextField(
+        verbose_name="Отзыв", blank=True, null=True, help_text="Введите опишите что вам понравилось"
+    )
     product = models.ForeignKey(
         Product,
         on_delete=models.SET_NULL,
@@ -15,7 +17,7 @@ class ProductPost(models.Model):
         help_text="Введите название товара",
         related_name="products",
     )
-    #путь для сохранения фото товаров
+    # путь для сохранения фото товаров
     image = models.ImageField(
         upload_to="data/image_news",
         blank=True,
